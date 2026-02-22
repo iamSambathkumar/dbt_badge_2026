@@ -1,0 +1,40 @@
+insert into RAW.JAFFLE_SHOP.ORDERS values
+(100, 100, '2025-02-15', 'shipped', current_timestamp),
+-- (101, 84, '2025-02-15', 'shipped', current_timestamp),
+-- (102, 42, '2025-02-15', 'shipped', current_timestamp),
+-- (103, 101, '2025-02-15', 'shipped', current_timestamp),
+-- (104, 66, '2025-02-15', 'shipped', current_timestamp);
+insert into RAW.JAFFLE_SHOP.ORDERS
+(ID, USER_ID, ORDER_DATE, STATUS, _ETL_LOADED_AT)
+values
+(105, 77, '2025-02-16', 'placed', current_timestamp),
+(106, 88, '2025-02-16', 'shipped', current_timestamp),
+(107, 45, '2025-02-17', 'returned', current_timestamp),
+(108, 23, '2025-02-17', 'shipped', current_timestamp),
+(109, 90, '2025-02-18', 'return_pending', current_timestamp),
+(110, 56, '2025-02-18', 'placed', current_timestamp),
+(111, 72, '2025-02-19', 'shipped', current_timestamp),
+(112, 39, '2025-02-19', 'returned', current_timestamp),
+(113, 64, '2025-02-20', 'placed', current_timestamp),
+(114, 81, '2025-02-20', 'shipped', current_timestamp);
+
+select * from DBT_BADGE2026.SNAPSHOTS.ORDERS_SNAPSHOT;
+
+
+select id, count(*) as versions
+from DBT_BADGE2026.SNAPSHOTS.ORDERS_SNAPSHOT
+group by id
+having count(*) > 1;
+
+update RAW.JAFFLE_SHOP.ORDERS
+set status = 'shipped'
+where id = 105;
+
+select
+    id,
+    status,
+    dbt_valid_from,
+    dbt_valid_to
+from DBT_BADGE2026.SNAPSHOTS.ORDERS_SNAPSHOT
+where id = 105
+order by dbt_valid_from;
