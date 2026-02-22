@@ -36,7 +36,10 @@ clean-targets:         # directories to be removed by `dbt clean`
 # using the `{{ config(...) }}` macro.
 
 models:
-  dbt_badge:
-    # Applies to all files under models/example/
-    example:
+  jaffle_shop:
+    staging:
+      +materialized: view
+    marts:
       +materialized: table
+
+
